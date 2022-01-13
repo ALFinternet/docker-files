@@ -4,8 +4,8 @@ services:
   npm:
     image: jc21/nginx-proxy-manager:latest
     container_name: npm
-    #cap_add:
-      #- NET_ADMIN
+    cap_add:
+      - NET_ADMIN
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -17,9 +17,9 @@ services:
       - 443:443
       - 80:80
       - 10081:81
-    networks: # networks are processed in lexical order
-      0hostnet: # process this one before any other network
-        ipv4_address: 192.168.1.4
+    networks:
+      directnet:
+        ipv4_address: ${REVPROXYIP}
       default:
     restart: unless-stopped
     healthcheck:
@@ -29,9 +29,9 @@ services:
 #
 #
 networks:
-  0hostnet:
-    external: true
+  directnet:
+    external:
     name: ${NETHOST}
   default:
-    external: true
+    external:
     name: ${NETCON}
