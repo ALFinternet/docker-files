@@ -30,8 +30,8 @@ services:
 #
 networks:
   directnet:
-    external:
+    external: true
     name: ${NETHOST}
   default:
-    external:
+    external: true
     name: ${NETCON}
