@@ -1,0 +1,139 @@
+---
+version: "2.1"
+services:
+#
+  heimdall:
+    image: lscr.io/linuxserver/heimdall
+    container_name: heimdall
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}heimdall:/config
+    #ports:
+      #- 52080:80
+      #- 52443:443
+    restart: unless-stopped
+#
+  mariadb:
+    image: lscr.io/linuxserver/mariadb
+    container_name: mariadb
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}mariadb:/config
+    #ports:
+      #- 3306:3306
+    restart: unless-stopped
+#
+  code-server:
+    image: lscr.io/linuxserver/code-server
+    container_name: code-server
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      #- PASSWORD=password #optional
+      #- HASHED_PASSWORD= #optional
+      #- SUDO_PASSWORD=password #optional
+      #- SUDO_PASSWORD_HASH= #optional
+      #- PROXY_DOMAIN=code-server.my.domain #optional
+      #- DEFAULT_WORKSPACE=/config/workspace #optional
+    volumes:
+      - ${LOCVOL1}code-server:/config
+    #ports:
+      #- 8099:8443
+      #- 8443:8443
+    restart: unless-stopped
+#
+  unifi-controller:
+    image: lscr.io/linuxserver/unifi-controller
+    container_name: unifi-controller
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MEM_LIMIT=1024M #optional
+      - MEM_STARTUP=512M #optional
+    volumes:
+      - ${LOCVOL1}unifi-controller:/config
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8443:8443
+      - 8843:8843 #optional
+      - 8880:8880 #optional
+      - 6789:6789 #optional
+      - 5514:5514/udp #optional
+    restart: unless-stopped
+#
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - JELLYFIN_PublishedServerUrl=${COREIP} #optional
+    volumes:
+      - ${LOCVOL1}jellyfin:/config
+      - ${MEDIAVOL}:/data
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      #- 1900:1900/udp #optional
+    restart: unless-stopped
+#
+  plex:
+    image: lscr.io/linuxserver/plex
+    container_name: plex
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEXCLAIM}
+    volumes:
+      - ${LOCVOL1}plex:/config
+      - ${MEDIAVOL}:/data
+    ports:
+      - 32400:32400
+      - 3005:3005
+      #- 5353:5353/udp
+      - 8324:8324
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+      - 32469:32469
+    restart: unless-stopped
+#
+  webtop:
+    image: lscr.io/linuxserver/webtop:ubuntu-xfce
+    container_name: webtop
+    privileged: true #optional
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - SUBFOLDER=/ #optional
+    volumes:
+      - ${LOCVOL1}webtop:/config
+      #- /var/run/docker.sock:/var/run/docker.sock # We don't need direct docker access
+    #ports:
+      #- 3000:3000
+    shm_size: "4gb" #optional
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    external:
+      name: ${NETCON}
