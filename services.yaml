@@ -90,6 +90,20 @@ services:
     shm_size: "4gb" #optional
     restart: unless-stopped
 #
+  nginx:
+    image: lscr.io/linuxserver/nginx
+    container_name: nginx
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}nginx:/config
+    #ports:
+      #- 80:80
+      #- 443:443
+    restart: unless-stopped
+#
 #
 networks:
   default:
