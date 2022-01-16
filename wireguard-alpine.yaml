@@ -25,3 +25,9 @@ services:
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
+#
+#
+networks:
+  default:
+    external:
+      name: ${NETCON}
