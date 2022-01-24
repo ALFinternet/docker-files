@@ -43,6 +43,21 @@ services:
       #- 443:443
     restart: unless-stopped
 #
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PMA_ARBITRARY=1 #optional
+      - PMA_ABSOLUTE_URI=https://phpmyadmin.finchhome.xyz #optional
+    volumes:
+      - ${LOCVOL1}phpmyadmin:/config
+    #ports:
+      #- 80:80
+    restart: unless-stopped
+#
 #
 networks:
   default:
