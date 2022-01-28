@@ -12,13 +12,13 @@ scrape_configs:
 
 # local machine logs
 
-- job_name: local
-  static_configs:
-  - targets:
-      - localhost
-    labels:
-      job: varlogs
-      __path__: /var/log/*log
+#- job_name: local
+#  static_configs:
+#  - targets:
+#      - localhost
+#    labels:
+#      job: varlogs
+#      __path__: /var/log/*log
   
 ## docker logs
 
