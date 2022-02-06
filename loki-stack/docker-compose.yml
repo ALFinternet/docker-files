@@ -48,7 +48,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${LOCVOL1}syslog-ng:/config
-      - ${LOCVOL2}logs:/var/log #optional
+      - ${LOCVOL2}syslog-logs:/var/log #optional
     ports:
       - 514:5514/udp
       - 601:6601/tcp
