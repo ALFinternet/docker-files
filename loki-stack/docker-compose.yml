@@ -39,6 +39,22 @@ services:
     #networks:
       #- loki
 #
+  syslog-ng:
+    image: lscr.io/linuxserver/syslog-ng
+    container_name: syslog-ng
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}syslog-ng:/config
+      - ${LOCVOL2}logs:/var/log #optional
+    ports:
+      - 514:5514/udp
+      - 601:6601/tcp
+      - 6514:6514/tcp
+    restart: unless-stopped
+#
 #
 networks:
   default:
