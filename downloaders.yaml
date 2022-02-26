@@ -115,6 +115,23 @@ services:
     depends_on: [ "privoxyvpn", ]
 #
 #
+#
+#
+  youtube-dl:
+    image: kmb32123/youtube-dl-server
+    container_name: youtube-dl
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL2}youtube-dl:/youtube-dl  #optional
+    ports:
+      - 42000:8080
+    networks:
+      - outsidelink
+    restart: unless-stopped
+#
 networks:
   outsidelink:
     external: true
