@@ -63,7 +63,7 @@ services:
   syncthing:
     image: lscr.io/linuxserver/syncthing
     container_name: syncthing
-    hostname: syncthing #optional
+    hostname: NAS #optional
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
