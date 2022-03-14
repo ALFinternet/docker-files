@@ -88,7 +88,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${LOCVOL1}sonarr:/config
-      - ${MEDIAVOL}TV\ Shows:/mediavol_tv #optional
+      - ${MEDIAVOL}TV Shows:/mediavol_tv #optional
       - ${LOCVOL2}torrents:/downloads  #optional
     #ports:
       #- 8989:8989
