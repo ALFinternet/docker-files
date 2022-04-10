@@ -1,0 +1,38 @@
+---
+version: "2.1"
+services:
+#
+  minecraft-allen:
+    image: itzg/minecraft-server:java17-alpine
+    container_name: minecraft-allen
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UID=${PUID}
+      - GID=${PGID}
+      - TYPE=PAPER
+      - EULA=TRUE
+      - VERSION=1.18.2
+      - SERVER_NAME=Allens Server
+      - LEVEL=world # world is the default
+      #- SEED=
+      - VIEW_DISTANCE=16
+      - SNOOPER_ENABLED=false
+      - MOTD="Allen's Server"
+      - OPS=Fincher_
+      - MODE=creative
+      - PVP=false
+      - MEMORY=4G
+      - USE_AIKAR_FLAGS=true
+    volumes:
+      - ${LOCVOL1}minecraft-allen:/data
+    ports:
+      - 25569:25565
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    external:
+      name: ${NETCON}
