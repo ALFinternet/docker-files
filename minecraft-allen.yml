@@ -25,9 +25,9 @@ services:
       - PVP=false
       - MEMORY=${MCMEM}
       - USE_AIKAR_FLAGS=true
-      - MODPACK=${MCMODPACK}
+      #- MODPACK=${MCMODPACK}
       - REMOVE_OLD_MODS=${MCREMOVEOLDMODS}
-      - SPIGET_RESOURCES=${MCSPIGET}
+      #- SPIGET_RESOURCES=${MCSPIGET}
 
     volumes:
       - ${LOCVOL1}minecraft-allen:/data
