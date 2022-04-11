@@ -14,12 +14,12 @@ services:
       - TYPE=PAPER
       - EULA=TRUE
       - VERSION=1.18.2
-      - SERVER_NAME=Allens Server
+      - SERVER_NAME=Home Server
       - LEVEL=world # world is the default
-      #- SEED=
+      - SEED=3612259
       - VIEW_DISTANCE=16
       - SNOOPER_ENABLED=false
-      - MOTD="Allen's Server"
+      - MOTD=Allen's Server
       - OPS=Fincher_
       - MODE=creative
       - PVP=false
@@ -31,6 +31,7 @@ services:
       - 25569:25565
     restart: unless-stopped
 #
+# 1536 89 1812
 #
 networks:
   default:
