@@ -11,20 +11,24 @@ services:
       - TZ=${TZ}
       - UID=${PUID}
       - GID=${PGID}
-      - TYPE=PAPER
+      - TYPE=${MCTYPE}
       - EULA=TRUE
-      - VERSION=1.18.2
-      - SERVER_NAME=Home Server
-      - LEVEL=world # world is the default
-      - SEED=3612259
-      - VIEW_DISTANCE=16
+      - VERSION=${MCVERSION}
+      - SERVER_NAME=${MCSVRNAME}
+      #- LEVEL=${MCLEVEL} # world is the default
+      - SEED=${MCSEED}
+      - VIEW_DISTANCE=${MCVIEWDIST}
       - SNOOPER_ENABLED=false
-      - MOTD=Allen's Server
-      - OPS=Fincher_
-      - MODE=creative
+      - MOTD=${MCMOTD}
+      - OPS=${MCOPS}
+      - MODE=${MCMODE}
       - PVP=false
-      - MEMORY=4G
+      - MEMORY=${MCMEM}
       - USE_AIKAR_FLAGS=true
+      - MODPACK=${MCMODPACK}
+      - REMOVE_OLD_MODS=${MCREMOVEOLDMODS}
+      - SPIGET_RESOURCES=${MCSPIGET}
+
     volumes:
       - ${LOCVOL1}minecraft-allen:/data
     ports:
