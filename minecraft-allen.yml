@@ -15,7 +15,7 @@ services:
       - EULA=TRUE
       - VERSION=${MCVERSION}
       - SERVER_NAME=${MCSVRNAME}
-      #- LEVEL=${MCLEVEL} # world is the default
+      - LEVEL=${MCLEVEL} # world is the default
       - SEED=${MCSEED}
       - VIEW_DISTANCE=${MCVIEWDIST}
       - SNOOPER_ENABLED=false
