@@ -1,0 +1,28 @@
+---
+version: "2.1"
+services:
+#
+  syslog-ng:
+    image: lscr.io/linuxserver/syslog-ng:latest
+    container_name: syslog-ng
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}syslog-ng:/config
+      - ${LOCVOL1}syslog-logs:/var/log
+    ports:
+      - 514:514/udp
+      - 601:601/tcp
+      #- 514:5514/udp
+      #- 601:6601/tcp
+      - 6514:6514/tcp
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    name: ${NETCON}
