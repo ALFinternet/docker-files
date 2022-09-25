@@ -19,8 +19,8 @@ services:
 #      - PIHOLE_DNS_=192.168.1.11;192.168.1.12
     volumes:
       - ${LOCVOL1}pihole1:/etc/pihole
-      - ${LOCVOL1}pihole1/config/resolv.conf:/etc/resolv.conf
-      - ${LOCVOL1}pihole1/config/dnsmasq.d:/etc/dnsmasq.d
+#      - ${LOCVOL1}pihole1/config/resolv.conf:/etc/resolv.conf
+#      - ${LOCVOL1}pihole1/config/dnsmasq.d:/etc/dnsmasq.d
     ports:
       - 3080:80
       - 53:53
