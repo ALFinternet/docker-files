@@ -1,0 +1,33 @@
+---
+version: "2.1"
+services:
+#
+  pihole1:
+    image: pihole/pihole:latest
+    container_name: pihole1
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBPASSWORD=${SUDOPASS}
+      - SERVERIP=${PIHOLE1IP}
+      - DNSMASQ_USER=root
+      - WEBTHEME=default-dark
+#      - TEMPERATUREUNIT=f
+#      - PIHOLE_DNS_=192.168.1.11;192.168.1.12
+    volumes:
+      - ${LOCVOL1}pihole1:/data
+      - ${LOCVOL1}pihole1:/etc/letsencrypt
+    ports:
+      - 3080:80
+      - 53:53
+      - 53:53/udp
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+#    external:
+    ipv4_address: ${PIHOLE1IP}
