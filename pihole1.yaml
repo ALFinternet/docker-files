@@ -26,9 +26,12 @@ services:
       - 53:53
       - 53:53/udp
     restart: unless-stopped
+    networks:
+      directnet:
+        ipv4_address: ${PIHOLE1IP}
 #
 #
 networks:
-  default:
-#    external:
-    ipv4_address: ${PIHOLE1IP}
+  directnet:
+    external: true
+    name: ${NETHOST}
