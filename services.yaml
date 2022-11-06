@@ -38,7 +38,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${LOCVOL1}nginx:/config
-      - ${LOCVOL1}code-server/workspace/dev-js:/config/www-devjs #javascript workspace code-server connector
+      #- ${LOCVOL1}code-server/workspace/dev-js:/config/www-devjs #javascript workspace code-server connector
     #ports:
       #- 80:80
       #- 443:443
