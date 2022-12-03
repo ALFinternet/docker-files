@@ -1,0 +1,25 @@
+---
+version: "2.1"
+services:
+#
+  emulatorjs:
+    image: lscr.io/linuxserver/emulatorjs:latest
+    container_name: emulatorjs
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}emulatorjs:/config
+      - ${LOCVOL1}emulatorjs-data:/data
+    #ports:
+      #- 3000:3000
+      #- 80:80
+      #- 4001:4001 #optional
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    external:
+      name: ${NETCON}
