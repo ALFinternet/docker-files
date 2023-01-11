@@ -9,8 +9,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - MEM_LIMIT=1024M #optional
-      - MEM_STARTUP=512M #optional
+      - MEM_LIMIT=2048M #optional
+      - MEM_STARTUP=1024M #optional
     volumes:
       - ${LOCVOL1}unifi-controller:/config
     ports:
