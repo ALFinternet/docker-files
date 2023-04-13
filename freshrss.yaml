@@ -1,0 +1,37 @@
+---
+version: "2.1"
+services:
+#
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:latest
+    container_name: freshrss
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}freshrss:/config
+    #ports:
+      #- 52080:80
+      #- 52443:443
+    restart: unless-stopped
+#
+#  mariadb:
+#    image: lscr.io/linuxserver/mariadb
+#    container_name: mariadb
+#    environment:
+#      - PUID=${PUID}
+#      - PGID=${PGID}
+#      - TZ=${TZ}
+#    volumes:
+#      - ${LOCVOL1}mariadb:/config
+#    #ports:
+#      #- 3306:3306
+#    restart: unless-stopped
+#
+#
+#
+networks:
+  default:
+    external:
+      name: ${NETCON}
