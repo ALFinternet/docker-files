@@ -11,8 +11,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${LOCVOL1}freshrss:/config
-    #ports:
-      #- 52080:80
+    ports:
+      - 52081:80
       #- 52443:443
     restart: unless-stopped
 #
