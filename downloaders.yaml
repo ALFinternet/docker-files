@@ -39,6 +39,7 @@ services:
       - 8112:8112 # deluge
       - 8989:8989 # sonarr
       - 9117:9117 # jackett
+      - 3000:3000 # webtop2
     networks:
       - outsidelink
     restart: unless-stopped
