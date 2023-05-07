@@ -9,9 +9,6 @@ services:
     container_name: privoxyvpn
     cap_add:
       - NET_ADMIN
-    privileged: true
-    sysctls:
-    - net.ipv4.conf.all.src_valid_mark=1
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -20,7 +17,7 @@ services:
       - VPN_USER=${VPNUSER}
       - VPN_PASS=${VPNPASS}
       - VPN_PROV=custom
-      - VPN_CLIENT=wireguard
+      - VPN_CLIENT=openvpn
       - VPN_OUTPUT_PORTS=
       - VPN_OPTIONS=
       - VPN_INPUT_PORTS=6881,7878,8112,8989,9117
