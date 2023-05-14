@@ -2,10 +2,16 @@
 version: "2.1"
 services:
   adminer:
-    image: adminer:latest
+    image: lscr.io/linuxserver/nginx:latest
+    container_name: adminer
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/mods:swag-imagemagick|linuxserver/mods:universal-cron
+    volumes:
+      - ${LOCVOL1}adminer:/config
     restart: unless-stopped
-    #ports:
-    #  - 8101:8080
 #
 #
 #
