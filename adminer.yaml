@@ -1,0 +1,15 @@
+---
+version: "2.1"
+services:
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    #ports:
+    #  - 8101:8080
+#
+#
+#
+networks:
+  default:
+    external: true
+    name: ${CONNET}
