@@ -82,5 +82,6 @@ services:
 #
 networks:
   default:
-    external:
-      name: ${NETCON}
+    name: ${NETCON}
+    external: true
+     
