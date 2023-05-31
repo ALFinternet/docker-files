@@ -41,3 +41,25 @@ networks:
   default:
     external:
       name: ${NETCON}
+#
+#
+#
+#PUID=1027
+#PGID=100
+#TZ=America/Los_Angeles
+#LOCVOL1=/volume2/docker-ssd/
+#LOCVOL2=/volume1/Externals/
+#NETCON=dbridge
+#MCTYPE=PAPER
+#MCVERSION=1.18.2
+#MCSVRNAME=Home Server
+#MCLEVEL=world
+#MCSEED=3612259
+#MCVIEWDIST=16
+#MCMOTD=MC Server
+#MCMODE=survival
+#MCMEM=4G
+#MCOPS=Fincher_
+#MCMODPACK=null
+#MCREMOVEOLDMODS=TRUE
+#MCSPIGET=null
