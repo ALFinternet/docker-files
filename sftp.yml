@@ -1,0 +1,31 @@
+---
+version: "2.1"
+services:
+#
+  sftpgo:
+    image: ghcr.io/drakkan/sftpgo:alpine
+    container_name: sftpgo
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      #- user 1100:1100
+      - user ${PUID}:${PGID}
+      - SFTPGO_FTPD__BINDINGS__0__PORT=2121
+      - SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP=${WANIP}
+    volumes:
+      - ${LOCVOL1}sftpgo/data:/srv/sftpgo
+      - ${LOCVOL1}sftpgo/home:/var/lib/sftpgo
+    ports:
+      #- 8080:8080 #webadmin, 8080 already in use
+      - 2022:2022
+      - 2121:2121
+      - 50000-50100:50000-50100
+    restart: unless-stopped
+#
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
