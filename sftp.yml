@@ -2,25 +2,20 @@
 version: "2.1"
 services:
 #
-  sftpgo:
-    image: ghcr.io/drakkan/sftpgo:alpine
-    container_name: sftpgo
+  sftp:
+    image: atmoz/sftp:alpine
+    container_name: sftp
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      #- user 1100:1100
-      - user ${PUID}:${PGID}
-      - SFTPGO_FTPD__BINDINGS__0__PORT=2121
-      - SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP=${WANIP}
     volumes:
-      - ${LOCVOL1}sftpgo/data:/srv/sftpgo
-      - ${LOCVOL1}sftpgo/home:/var/lib/sftpgo
+      - ${LOCVOL1}sftp/configs/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key
+      - ${LOCVOL1}sftp/configs/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key
+      - ${LOCVOL1}sftp/configs/users.conf:/etc/sftp/users.conf:ro
+      - ${LOCVOL1}sftp/uploads:/home
     ports:
-      #- 8080:8080 #webadmin, 8080 already in use
-      - 2022:2022
-      - 2121:2121
-      - 50000-50100:50000-50100
+      - 2222:22
     restart: unless-stopped
 #
 #
