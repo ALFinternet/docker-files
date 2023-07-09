@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  app:
+    image: actualbudget/actual-server:latest
+    container_name: actualbudget
+    restart: unless-stopped
+    env_file: stack.env
+    volumes:
+      - ${LOCVOL1}actualbudget:/data
+
+networks:
+  default:
+    name: ${CONNET}
+    external: true
