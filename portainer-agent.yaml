@@ -13,7 +13,7 @@ services:
     restart: always
 #
 #
-#networks:
-#  default:
-#    name: dbr0
-#    external: true
+networks:
+  default:
+    name: dbr0
+    external: true
