@@ -1,39 +1,37 @@
----
-version: "2.1"
+--- 
+version: '3.7'
 services:
-#
   npm:
     image: jc21/nginx-proxy-manager:latest
     container_name: npm
     cap_add:
       - NET_ADMIN
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+    env_file: stack.env # used by portainer
     volumes:
-      - ${LOCVOL1}npm:/data
-      - ${LOCVOL1}npm-certs:/etc/letsencrypt
+      - ${LOCVOL1}npm/app:/data
+      - ${LOCVOL1}npm/certs:/etc/letsencrypt
     ports:
       - 443:443
       - 80:80
-      - 10081:81
-      - 12001-12020:12001-12020
-    networks:
-      directnet:
-        ipv4_address: ${REVPROXYIP}
-      default:
+      - 10081:81 # NPM admin interface
+      - 12001-12020:12001-12020 # for rr stack
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "/bin/check-health"]
       interval: 10s
       timeout: 3s
+    depends_on:
+      - db
 #
+  db:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: npm-db
+    env_file: stack.env # used by portainer
+    volumes:
+      - ${LOCVOL1}npm/db:/config
+    restart: unless-stopped
 #
 networks:
-  directnet:
-    external: true
-    name: ${NETHOST}
   default:
+    name: ${CONNET}
     external: true
-    name: ${NETCON}
