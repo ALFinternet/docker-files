@@ -1,3 +1,6 @@
+#
+# https://nginxproxymanager.com/setup/#using-mysql-mariadb-database
+#
 --- 
 version: '3.7'
 services:
@@ -15,6 +18,8 @@ services:
       - 80:80
       - 10081:81 # NPM admin interface
       - 12001-12020:12001-12020 # for rr stack
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "/bin/check-health"]
@@ -26,12 +31,12 @@ services:
   db:
     image: lscr.io/linuxserver/mariadb:latest
     container_name: npm-db
-    env_file: stack.env # used by portainer but rather than reference the others in the stack, we'll just code them below
+    env_file: stack.env # used by portainer
     environment:
-      - MYSQL_ROOT_PASSWORD=${NPMPASS}
-      - MYSQL_DATABASE=${NPMDBNAME} #optional
-      - MYSQL_USER=${NPMUSR} #optional
-      - MYSQL_PASSWORD=${NPMPASS} #optional
+      - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${DB_MYSQL_NAME} #optional
+      - MYSQL_USER=${DB_MYSQL_USER} #optional
+      - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD} #optional
     volumes:
       - ${LOCVOL1}npm/db:/config
     restart: unless-stopped
