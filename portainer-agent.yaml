@@ -3,7 +3,7 @@ version: "2.1"
 services:
 #
   portainer_agent:
-    image: portainer/agent
+    image: portainer/agent:latest
     container_name: portainer_agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -15,6 +15,5 @@ services:
 #
 networks:
   default:
-    external:
-      #name: ${NETCON}
-      name: dbridge
+    name: dbr0
+    external: true
