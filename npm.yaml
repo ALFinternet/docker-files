@@ -26,7 +26,12 @@ services:
   db:
     image: lscr.io/linuxserver/mariadb:latest
     container_name: npm-db
-    env_file: stack.env # used by portainer
+    env_file: stack.env # used by portainer but rather than reference the others in the stack, we'll just code them below
+    environment:
+      - MYSQL_ROOT_PASSWORD=${NPMPASS}
+      - MYSQL_DATABASE=${NPMDBNAME} #optional
+      - MYSQL_USER=${NPMUSR} #optional
+      - MYSQL_PASSWORD=${NPMPASS} #optional
     volumes:
       - ${LOCVOL1}npm/db:/config
     restart: unless-stopped
