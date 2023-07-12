@@ -1,0 +1,17 @@
+# https://docs.firefly-iii.org/firefly-iii/installation/docker/
+
+version: '3.7'
+
+services:
+  app:
+    image: fireflyiii/core:latest
+    container_name: fireflyiii
+    restart: unless-stopped
+    env_file: stack.env
+    volumes:
+      - ${LOCVOL1}fireflyiii:/data
+
+networks:
+  default:
+    name: ${CONNET}
+    external: true
