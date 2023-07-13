@@ -21,6 +21,7 @@ services:
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
     networks:
+      default:
       directnet:
         ipv4_address: ${MACNETADDR}
     restart: unless-stopped
