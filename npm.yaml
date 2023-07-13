@@ -20,6 +20,9 @@ services:
       - 12001-12020:12001-12020 # for rr stack
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
+    networks:
+      alphanet:
+        ipv4_address: 192.168.1.6
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "/bin/check-health"]
@@ -46,4 +49,7 @@ services:
 networks:
   default:
     name: ${CONNET}
+    external: true
+  alphanet:
+    name: ${MACNET}
     external: true
