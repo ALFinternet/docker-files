@@ -21,7 +21,7 @@ services:
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
     networks:
-      alphanet:
+      directnet:
         ipv4_address: 192.168.1.6
     restart: unless-stopped
     healthcheck:
@@ -50,6 +50,6 @@ networks:
   default:
     name: ${CONNET}
     external: true
-  alphanet:
+  directnet:
     name: ${MACNET}
     external: true
