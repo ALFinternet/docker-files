@@ -3,18 +3,9 @@ version: "2.1"
 services:
 #
   code-server:
-    image: lscr.io/linuxserver/code-server
+    image: lscr.io/linuxserver/code-server:latest
     container_name: code-server
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      #- PASSWORD=password #optional
-      #- HASHED_PASSWORD= #optional
-      - SUDO_PASSWORD=${SUDOPASS} #optional
-      #- SUDO_PASSWORD_HASH= #optional
-      #- PROXY_DOMAIN=code-server.my.domain #optional
-      #- DEFAULT_WORKSPACE=/config/workspace #optional
+    env_file: stack.env # used by portainer
     volumes:
       - ${LOCVOL1}code-server:/config
     #ports:
@@ -25,5 +16,5 @@ services:
 #
 networks:
   default:
-    name: ${NETCON}
+    name: ${CONNET}
     external: true
