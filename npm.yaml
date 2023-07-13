@@ -39,6 +39,8 @@ services:
       - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD} #optional
     volumes:
       - ${LOCVOL1}npm/db:/config
+    #ports:
+      #- 3306:3306
     restart: unless-stopped
 #
 networks:
