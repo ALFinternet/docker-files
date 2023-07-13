@@ -1,0 +1,43 @@
+--- 
+version: '3.7'
+services:
+#
+  nginx:
+    image: lscr.io/linuxserver/nginx:latest
+    container_name: nginx
+    env_file: stack.env # used by portainer
+    volumes:
+      - ${LOCVOL1}webstack/nginx:/config
+    restart: unless-stopped
+#
+  db:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: mariadb
+    env_file: stack.env # used by portainer
+    volumes:
+      - ${LOCVOL1}webstack/mariadb:/config
+    restart: unless-stopped
+#
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    env_file: stack.env # used by portainer
+    volumes:
+      - ${LOCVOL1}webstack/heimdall:/config
+    restart: unless-stopped
+#
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: phpmyadmin
+    env_file: stack.env # used by portainer
+    environment:
+      - PMA_ARBITRARY=1 #optional
+      - PMA_ABSOLUTE_URI=https://phpmyadmin.finchhome.xyz #optional
+    volumes:
+      - ${LOCVOL1}webstack/phpmyadmin:/config
+    restart: unless-stopped
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
