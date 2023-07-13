@@ -10,6 +10,9 @@ services:
     cap_add:
       - NET_ADMIN
     env_file: stack.env # used by portainer
+    environment:
+      - PUID=0
+      - PGID=0
     volumes:
       - ${LOCVOL1}npm/app:/data
       - ${LOCVOL1}npm/certs:/etc/letsencrypt
