@@ -3,12 +3,10 @@ version: "2.1"
 services:
 #
   unifi-controller:
-    image: lscr.io/linuxserver/unifi-controller
+    image: lscr.io/linuxserver/unifi-controller:latest
     container_name: unifi-controller
+    env_file: stack.env # used by portainer
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
       - MEM_LIMIT=1024 #optional
       - MEM_STARTUP=512 #optional
     volumes:
@@ -28,5 +26,5 @@ services:
 #
 networks:
   default:
-#    external:
-    name: ${NETCON}
+    name: ${CONNET}
+    external: true
