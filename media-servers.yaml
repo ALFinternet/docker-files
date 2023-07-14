@@ -9,6 +9,7 @@ services:
     volumes:
       - ${LOCVOL1}jellyfin:/config
       - ${MEDIAVOL}:/data
+      - ${MEDIAVOL}:/Media
     ports:
       - 8096:8096 # HTTP webUI
       - 8920:8920 #optional, HTTPS web ui
@@ -22,7 +23,9 @@ services:
     env_file: stack.env # used by portainer
     volumes:
       - ${LOCVOL1}plex:/config
-      - ${MEDIAVOL}:/data
+      - ${MEDIAVOL}:/Media
+      - ${MEDIAVOL}TV\ Shows:/tv
+      - ${MEDIAVOL}Movies:/movies
     ports:
       - 32400:32400 # WebUI
       - 1900:1900/udp # Plex DLNA Server
