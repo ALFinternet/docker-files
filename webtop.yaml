@@ -8,6 +8,7 @@ services:
     privileged: true #optional
     security_opt:
       - seccomp:unconfined #optional
+    env_file: stack.env # used by portainer
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -15,14 +16,15 @@ services:
       - SUBFOLDER=/ #optional
     volumes:
       - ${LOCVOL1}webtop:/config
+      - ${LOCVOL1}:/appdata
       #- /var/run/docker.sock:/var/run/docker.sock # We don't need direct docker access
-    #ports:
-      #- 3000:3000
-    shm_size: "4gb" #optional
+    ports:
+      - 3000:3000
+    shm_size: "2gb" #optional
     restart: unless-stopped
 #
 #
 networks:
   default:
-    external:
-      name: ${NETCON}
+    name: ${CONNET}
+    external: true
