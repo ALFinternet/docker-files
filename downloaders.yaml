@@ -34,14 +34,43 @@ services:
       - 8118:8118 # privoxy
       - 9118:9118 # microsocks
       - 6881:6881 # deluge torrents
+      - 6881:6881/udp # deluge torrents
+      - 9091:9091 # transmission UI
+      - 51413:51413 # transmission Download TCP
+      - 51413:51413/udp # transmission Download UDP
       - 7878:7878 # radarr
-      - 8112:8112 # deluge
+      - 8112:8112 # deluge UI
       - 8989:8989 # sonarr
       - 9117:9117 # jackett
       - 3001:3000 # webtop2
     networks:
       - outsidelink
     restart: unless-stopped
+#
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - TRANSMISSION_WEB_HOME= #optional
+      - USER= #optional
+      - PASS= #optional
+      - WHITELIST= #optional
+      - PEERPORT= #optional
+      - HOST_WHITELIST= #optional
+    volumes:
+      - ${LOCVOL1}downloaders/transmission:/config
+      - ${DLVOL}:/downloads
+      - ${DLVOL}intake:/watch
+    #ports:
+      #- 9091:9091 # webUI
+      #- 51413:51413 # Download TCP
+      #- 51413:51413/udp # Download UDP
+    restart: unless-stopped
+    network_mode: "service:privoxyvpn"
+    depends_on: [ "privoxyvpn", ]
 #
   deluge:
     image: lscr.io/linuxserver/deluge:latest
