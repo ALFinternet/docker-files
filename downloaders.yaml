@@ -53,7 +53,7 @@ services:
       - DELUGE_LOGLEVEL=error #optional
     volumes:
       - ${LOCVOL1}downloaders/deluge:/config
-      - ${LOCVOL2}Downloads:/downloads
+      - ${DLVOL}:/downloads
     #ports:
       #- 8112:8112
       #- 6881:6881
@@ -72,7 +72,7 @@ services:
     volumes:
       - ${LOCVOL1}downloaders/radarr:/config
       - ${MEDIAVOL}Movies:/movies #optional
-      - ${LOCVOL2}Downloads:/downloads  #optional
+      - ${DLVOL}:/downloads #optional
     #ports:
       #- 7878:7878
     restart: unless-stopped
@@ -89,7 +89,7 @@ services:
     volumes:
       - ${LOCVOL1}downloaders/sonarr:/config
       - ${MEDIAVOL}TV Shows:/mediavol_tv #optional
-      - ${LOCVOL2}Downloads:/downloads  #optional
+      - ${DLVOL}:/downloads #optional
     #ports:
       #- 8989:8989
     restart: unless-stopped
@@ -107,7 +107,7 @@ services:
       - RUN_OPTS= #optional
     volumes:
       - ${LOCVOL1}downloaders/jackett:/config
-      - ${LOCVOL2}Downloads:/downloads  #optional
+      - ${DLVOL}:/downloads #optional
     #ports:
       #- 9117:9117
     restart: unless-stopped
