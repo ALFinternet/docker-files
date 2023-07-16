@@ -1,37 +1,18 @@
----
-version: "2.1"
+--- 
+version: '3.7'
 services:
 #
   freshrss:
     image: lscr.io/linuxserver/freshrss:latest
     container_name: freshrss
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+    env_file: stack.env # used by portainer
     volumes:
       - ${LOCVOL1}freshrss:/config
-    ports:
-      - 52081:80
-      #- 52443:443
+    #ports:
+      #- 80:80
     restart: unless-stopped
-#
-#  mariadb:
-#    image: lscr.io/linuxserver/mariadb
-#    container_name: mariadb
-#    environment:
-#      - PUID=${PUID}
-#      - PGID=${PGID}
-#      - TZ=${TZ}
-#    volumes:
-#      - ${LOCVOL1}mariadb:/config
-#    #ports:
-#      #- 3306:3306
-#    restart: unless-stopped
-#
-#
 #
 networks:
   default:
-    external:
-      name: ${NETCON}
+    name: ${CONNET}
+    external: true
