@@ -13,25 +13,25 @@ services:
       - TZ=${TZ}
       - WEBPASSWORD=${SUDOPASS}
       - SERVERIP=${PIHOLE1IP}
-      - DNSMASQ_USER=root
+      #- DNSMASQ_USER=root #may be required if running on synology
       - WEBTHEME=default-dark
-#      - TEMPERATUREUNIT=f
+      - TEMPERATUREUNIT=f
 #      - PIHOLE_DNS_=192.168.1.11;192.168.1.12
     volumes:
       - ${LOCVOL1}pihole1:/etc/pihole
+      - ${LOCVOL1}pihole1/config/dnsmasq.d:/etc/dnsmasq.d
 #      - ${LOCVOL1}pihole1/config/resolv.conf:/etc/resolv.conf
-#      - ${LOCVOL1}pihole1/config/dnsmasq.d:/etc/dnsmasq.d
     ports:
-      - 3080:80
+      - 80:80
       - 53:53
       - 53:53/udp
     restart: unless-stopped
     networks:
       directnet:
-        ipv4_address: ${PIHOLE1IP}
+        ipv4_address: ${PIHOLE1ADDR}
 #
 #
 networks:
   directnet:
+    name: ${MACNET}
     external: true
-    name: ${NETHOST}
