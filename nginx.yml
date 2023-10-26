@@ -14,3 +14,12 @@ services:
       - 80:80
       - 443:443
     restart: unless-stopped
+    networks:
+      cloudflared:
+        aliases:
+          - www-pawn-inc
+
+networks:
+  cloudflared:
+    name: cloudflare
+    external: true
