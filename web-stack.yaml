@@ -21,9 +21,15 @@ services:
   heimdall:
     image: lscr.io/linuxserver/heimdall:latest
     container_name: heimdall
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     env_file: stack.env # used by portainer
     volumes:
       - ${LOCVOL1}webstack/heimdall:/config
+    ports:
+      - 80:58080
     restart: unless-stopped
 #
   phpmyadmin:
