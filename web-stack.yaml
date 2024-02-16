@@ -29,7 +29,7 @@ services:
     volumes:
       - ${LOCVOL1}webstack/heimdall:/config
     ports:
-      - 80:58080
+      - 58080:80
     restart: unless-stopped
 #
   phpmyadmin:
