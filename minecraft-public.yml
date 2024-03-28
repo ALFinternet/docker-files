@@ -1,0 +1,66 @@
+---
+version: "2.1"
+services:
+#
+  minecraft-public:
+    image: itzg/minecraft-server:java17-alpine
+    container_name: minecraft-public
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UID=${PUID}
+      - GID=${PGID}
+      - TYPE=${MCTYPE}
+      - EULA=TRUE
+      - VERSION=${MCVERSION}
+      - SERVER_NAME=${MCSVRNAME}
+      - LEVEL=${MCLEVEL} # world is the default
+      - SEED=${MCSEED}
+      - VIEW_DISTANCE=${MCVIEWDIST}
+      - SNOOPER_ENABLED=false
+      - MOTD=${MCMOTD}
+      - OPS=${MCOPS}
+      - MODE=${MCMODE}
+      - PVP=${MCPVP}
+      - MEMORY=${MCMEM}
+      - USE_AIKAR_FLAGS=true
+      #- MODPACK=${MCMODPACK}
+      - REMOVE_OLD_MODS=${MCREMOVEOLDMODS}
+      #- SPIGET_RESOURCES=${MCSPIGET}
+
+    volumes:
+      - ${LOCVOL1}minecraft-public:/data
+    ports:
+      - 25565:25565
+    restart: unless-stopped
+#
+# 1536 89 1812
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
+
+#
+#
+#PUID=1000
+#PGID=1000
+#TZ=America/Los_Angeles
+#LOCVOL1=/volume2/docker-ssd/
+#LOCVOL2=/volume1/Externals/
+#NETCON=dbridge
+#MCTYPE=PAPER
+#MCVERSION=1.18.2
+#MCSVRNAME=Home Server
+#MCLEVEL=world
+#MCSEED=3612259
+#MCVIEWDIST=16
+#MCMOTD=MC Server
+#MCMODE=survival
+#MCPVP=false
+#MCMEM=4G
+#MCOPS=Fincher_
+#MCMODPACK=null
+#MCREMOVEOLDMODS=TRUE
+#MCSPIGET=null
