@@ -21,6 +21,7 @@ services:
       - SNOOPER_ENABLED=false
       - MOTD=${MCMOTD}
       - OPS=${MCOPS}
+      - EXISTING_OPS_FILE=${MCOPSEXIST}
       - MODE=${MCMODE}
       - PVP=${MCPVP}
       - MEMORY=${MCMEM}
@@ -31,7 +32,7 @@ services:
       - RCON_CMDS_STARTUP=${MCCMDSSTART}
       - RCON_CMDS_ON_DISCONNECT=${MCCMDSDISC}
       - RCON_CMDS_FIRST_CONNECT=${MCCMDSSTARTFIRST}
-      - RCON_CMDS_LAST_DISCONNECT=${MCCMDSSTARTLAST}      
+      - RCON_CMDS_LAST_DISCONNECT=${MCCMDSSTARTLAST}
 
     volumes:
       - ${LOCVOL1}minecraft-public:/data
