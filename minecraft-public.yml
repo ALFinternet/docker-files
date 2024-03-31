@@ -3,7 +3,7 @@ version: "2.1"
 services:
 #
   minecraft-public:
-    image: itzg/minecraft-server:java17-alpine
+    image: itzg/minecraft-server:${MCIMAGE}
     container_name: minecraft-public
     environment:
       - PUID=${PUID}
