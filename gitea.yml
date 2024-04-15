@@ -1,0 +1,49 @@
+---
+version: "2.1"
+services:
+#
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    environment:
+      - USER_UID=${PUID}
+      - USER_GID=${PGID}
+      - TZ=${TZ}
+
+    volumes:
+      - ${LOCVOL1}gitea/data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - etc/localtime:/etc/localtime:ro
+    ports:
+      - 3000:3000
+      - 2222:22
+    restart: unless-stopped
+    depends_on:
+      - db
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.gitea.rule=Host(`${TRAEFIXURL}`)"
+    - "traefik.http.services.gitea-websecure.loadbalancer.server.port=3000"
+#
+  db:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: gitea-db
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${DB_MYSQL_NAME} #optional
+      - MYSQL_USER=${DB_MYSQL_USER} #optional
+      - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD} #optional
+    volumes:
+      - ${LOCVOL1}gitea/db:/config
+    #ports:
+      #- 3306:3306
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
