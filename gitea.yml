@@ -24,10 +24,10 @@ services:
     restart: unless-stopped
     depends_on:
       - db
-  labels:
-    - "traefik.enable=true"
-    - "traefik.http.routers.gitea.rule=Host(`${TRAEFIXURL}`)"
-    - "traefik.http.services.gitea-websecure.loadbalancer.server.port=3000"
+  #labels:
+  #  - "traefik.enable=true"
+  #  - "traefik.http.routers.gitea.rule=Host(`${TRAEFIXURL}`)"
+  #  - "traefik.http.services.gitea-websecure.loadbalancer.server.port=3000"
 #
   db:
     image: lscr.io/linuxserver/mariadb:latest
