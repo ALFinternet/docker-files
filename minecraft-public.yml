@@ -1,3 +1,6 @@
+#
+# https://docker-minecraft-server.readthedocs.io/en/latest/variables/#general-options
+#
 ---
 version: "2.1"
 services:
@@ -13,7 +16,7 @@ services:
       - GID=${PGID}
       - TYPE=${MCTYPE}
       - EULA=TRUE
-      - VERSION=${MCVERSION}
+      - VERSION=${MCVERSION} # What is our minecraft version
       - SERVER_NAME=${MCSVRNAME}
       - LEVEL=${MCLEVEL} # world is the default
       - SEED=${MCSEED}
