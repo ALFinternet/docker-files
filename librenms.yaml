@@ -1,0 +1,207 @@
+---
+version: "2.1"
+services:
+#
+  db:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: librenms_db
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${DB_MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${DB_MYSQL_NAME} #optional
+      - MYSQL_USER=${DB_MYSQL_USER} #optional
+      - MYSQL_PASSWORD=${DB_MYSQL_PASSWORD} #optional
+    volumes:
+      - ${LOCVOL1}librenms/db:/config
+    #ports:
+      #- 3306:3306
+    restart: unless-stopped
+#
+  librenms:
+    image: librenms/librenms:latest
+    container_name: librenms
+    hostname: librenms
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+#    env_file:
+#      - "./librenms.env"
+    environment:
+      - "TZ=${TZ}"
+      - "PUID=${PUID}"
+      - "PGID=${PGID}"
+      - "DB_HOST=db"
+      - "DB_NAME=${DB_MYSQL_NAME}"
+      - "DB_USER=${DB_MYSQL_USER}"
+      - "DB_PASSWORD=${DB_MYSQL_PASSWORD}"
+      - "DB_TIMEOUT=60"
+      - MEMORY_LIMIT=${MEMORY_LIMIT}
+      - MAX_INPUT_VARS=${MAX_INPUT_VARS}
+      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}
+      - OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}
+      - REAL_IP_FROM=${REAL_IP_FROM}
+      - REAL_IP_HEADER=${REAL_IP_HEADER}
+      - LOG_IP_VAR=${LOG_IP_VAR}
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - REDIS_HOST=redis
+      - LIBRENMS_SNMP_COMMUNITY=librenmsdocker
+      - LIBRENMS_WEATHERMAP=false
+      - LIBRENMS_WEATHERMAP_SCHEDULE=*/5 * * * *
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+      - msmtpd
+    volumes:
+      - ${LOCVOL1}librenms/app:/data
+    restart: unless-stopped
+#
+  dispatcher:
+    image: librenms/librenms:latest
+    container_name: librenms_dispatcher
+    hostname: librenms-dispatcher
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    depends_on:
+      - librenms
+      - redis
+    volumes:
+      - ${LOCVOL1}librenms/app:/data
+#    env_file:
+#      - "./librenms.env"
+    environment:
+      - "TZ=${TZ}"
+      - "PUID=${PUID}"
+      - "PGID=${PGID}"
+      - "DB_HOST=db"
+      - "DB_NAME=${DB_MYSQL_NAME}"
+      - "DB_USER=${DB_MYSQL_USER}"
+      - "DB_PASSWORD=${DB_MYSQL_PASSWORD}"
+      - "DB_TIMEOUT=60"
+      - "DISPATCHER_NODE_ID=dispatcher1"
+      - "SIDECAR_DISPATCHER=1"
+      - MEMORY_LIMIT=${MEMORY_LIMIT}
+      - MAX_INPUT_VARS=${MAX_INPUT_VARS}
+      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}
+      - OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}
+      - REAL_IP_FROM=${REAL_IP_FROM}
+      - REAL_IP_HEADER=${REAL_IP_HEADER}
+      - LOG_IP_VAR=${LOG_IP_VAR}
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - REDIS_HOST=redis
+      - LIBRENMS_SNMP_COMMUNITY=librenmsdocker
+      - LIBRENMS_WEATHERMAP=false
+      - LIBRENMS_WEATHERMAP_SCHEDULE=*/5 * * * *
+    restart: unless-stopped
+#
+#  syslogng:
+#    image: librenms/librenms:latest
+#    container_name: librenms_syslogng
+#    hostname: librenms-syslogng
+#    cap_add:
+#      - NET_ADMIN
+#      - NET_RAW
+#    depends_on:
+#      - librenms
+#      - redis
+#    ports:
+#      - target: 514
+#        published: 514
+#        protocol: tcp
+#      - target: 514
+#        published: 514
+#        protocol: udp
+#    volumes:
+#      - "./librenms:/data"
+#    env_file:
+#      - "./librenms.env"
+#    environment:
+#      - "TZ=${TZ}"
+#      - "PUID=${PUID}"
+#      - "PGID=${PGID}"
+#      - "DB_HOST=db"
+#      - "DB_NAME=${DB_MYSQL_NAME}"
+#      - "DB_USER=${DB_MYSQL_USER}"
+#      - "DB_PASSWORD=${DB_MYSQL_PASSWORD}"
+#      - "DB_TIMEOUT=60"
+#      - "SIDECAR_SYSLOGNG=1"
+#    restart: unless-stopped
+#
+  snmptrapd:
+    image: librenms/librenms:latest
+    container_name: librenms_snmptrapd
+    hostname: librenms-snmptrapd
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    depends_on:
+      - librenms
+      - redis
+    ports:
+      - 162:162
+      - 162:162/udp
+    volumes:
+      - ${LOCVOL1}librenms/app:/data
+#    env_file:
+#      - "./librenms.env"
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - DB_HOST=db
+      - DB_NAME=${DB_MYSQL_NAME}
+      - DB_USER=${DB_MYSQL_USER}
+      - DB_PASSWORD=${DB_MYSQL_PASSWORD}
+      - DB_TIMEOUT=60
+      - SIDECAR_SNMPTRAPD=1
+      - MEMORY_LIMIT=${MEMORY_LIMIT}
+      - MAX_INPUT_VARS=${MAX_INPUT_VARS}
+      - UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}
+      - OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}
+      - REAL_IP_FROM=${REAL_IP_FROM}
+      - REAL_IP_HEADER=${REAL_IP_HEADER}
+      - LOG_IP_VAR=${LOG_IP_VAR}
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - REDIS_HOST=redis
+      - LIBRENMS_SNMP_COMMUNITY=librenmsdocker
+      - LIBRENMS_WEATHERMAP=false
+      - LIBRENMS_WEATHERMAP_SCHEDULE=*/5 * * * *
+    restart: unless-stopped
+#
+  redis:
+    image: redis:5.0-alpine
+    container_name: librenms_redis
+    environment:
+      - "TZ=${TZ}"
+    restart: unless-stopped
+#
+  msmtpd:
+    image: crazymax/msmtpd:latest
+    container_name: librenms_msmtpd
+#    env_file:
+#      - "./msmtpd.env"
+    environment:
+    # https://github.com/crazy-max/docker-msmtpd
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_TLS=on
+      - SMTP_STARTTLS=on
+      - SMTP_TLS_CHECKCERT=on
+      - SMTP_AUTH=on
+      - SMTP_USER=foo
+      - SMTP_PASSWORD=bar
+      - SMTP_FROM=foo@gmail.com
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
