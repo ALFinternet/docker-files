@@ -10,9 +10,9 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=${TZ}
       - UID=${PUID}
       - GID=${PGID}
+      - TZ=${TZ}
       - TYPE=${MCTYPE}
       - EULA=TRUE
       - VERSION=${MCVERSION} # What is our minecraft version
@@ -37,7 +37,7 @@ services:
       - RCON_CMDS_LAST_DISCONNECT=${MCCMDSSTARTLAST}
 
     volumes:
-      - ${LOCVOL1}minecraft-public:/data
+      - ${LOCVOL1}minecraft-kids:/data
     ports:
       - 25565:25565
     restart: unless-stopped
