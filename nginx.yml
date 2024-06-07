@@ -1,25 +1,21 @@
----
-version: "2.1"
+--- 
 services:
+#
   nginx:
     image: lscr.io/linuxserver/nginx:latest
     container_name: nginx
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     volumes:
-      - /appdata/nginx:/config
+      - ${LOCVOL1}nginx:/config
     ports:
       - 80:80
       - 443:443
     restart: unless-stopped
-    networks:
-      cloudflared:
-        aliases:
-          - www-pawn-inc
-
+#
 networks:
-  cloudflared:
-    name: cloudflare
+  default:
+    name: ${CONNET}
     external: true
