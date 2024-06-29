@@ -1,0 +1,27 @@
+#
+# https://github.com/louislam/uptime-kuma?tab=readme-ov-file
+#
+---
+services:
+#
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}uptime-kuma:/app/data
+    ports:
+      - 3001:3001
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+#
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
