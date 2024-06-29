@@ -14,7 +14,7 @@ services:
     volumes:
       - ${LOCVOL1}uptime-kuma:/app/data
     ports:
-      - 3001:3001
+      - 3002:3001 # 3001 is already in use
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
