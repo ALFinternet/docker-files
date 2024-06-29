@@ -1,0 +1,30 @@
+#
+# https://oss.oetiker.ch/smokeping/
+# https://github.com/linuxserver/docker-smokeping
+#
+---
+services:
+#
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:latest
+    container_name: smokeping
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MASTER_URL=${SMK_MASTER_URL} #optional, Specify the master url to connect to. Used when in slave mode.
+      - SHARED_SECRET=${SMK_SHARED_SECRET} #optional, Specify the master shared secret for this host. Used when in slave mode.
+      - CACHE_DIR=/tmp #optional, Specify the cache directory for this host. Used when in slave mode.
+    volumes:
+      - ${LOCVOL1}smokeping/config:/config
+      - ${LOCVOL1}smokeping/data:/data
+    ports:
+      - 8085:80 
+    restart: unless-stopped
+#
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
