@@ -8,6 +8,7 @@ services:
   smokeping:
     image: lscr.io/linuxserver/smokeping:latest
     container_name: smokeping
+    hostname: smokeping
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
