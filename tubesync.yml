@@ -1,0 +1,26 @@
+#
+# https://github.com/meeb/tubesync
+#
+---
+services:
+#
+  tubesync:
+    image: ghcr.io/meeb/tubesync:latest
+    container_name: tubesync
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}tubesync/config:/config
+      - ${LOCVOL1}tubesync/downloads:/downloads
+    ports:
+      - 4848:4848 
+    restart: unless-stopped
+#
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
