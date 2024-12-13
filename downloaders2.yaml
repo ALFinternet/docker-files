@@ -52,3 +52,26 @@ services:
       - 8989:8989 # sonarr
       - 9117:9117 # jackett
       - 3001:3000 # webtop2
+  curl:
+    image: curlimages/curl
+    network_mode: "service:gluetun"  # <-- the magic
+#
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - ${LOCVOL1}downloaders/deluge:/config
+      - ${DLVOL}:/downloads
+    #ports:
+      #- 8112:8112
+      #- 6881:6881
+      #- 6881:6881/udp
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    depends_on: [ "gluetun", ]
+#
