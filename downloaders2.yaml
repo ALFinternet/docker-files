@@ -1,0 +1,54 @@
+# run docker through VPN container
+# https://code.mendhak.com/run-docker-through-vpn-container/
+---
+services:
+#
+  gluetun:
+    image: ghcr.io/qdm12/gluetun:latest
+    container_name: gluetun
+    # line above must be uncommented to allow external containers to connect.
+    # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/connect-a-container-to-gluetun.md#external-container-to-gluetun
+    cap_add:
+        - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER} # windscribe
+      - VPN_TYPE=${VPN_TYPE} # wireguard
+      # use these or put file in root/wireguard/wg0.conf
+      - WIREGUARD_ENDPOINT_IP=${WIREGUARD_ENDPOINT_IP}
+      - WIREGUARD_ENDPOINT_PORT=${WIREGUARD_ENDPOINT_PORT}
+      - WIREGUARD_PUBLIC_KEY=${WIREGUARD_PUBLIC_KEY}
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_PRESHARED_KEY=${WIREGUARD_PRESHARED_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES} # <someaddress>/32
+      #
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - OPENVPN_CUSTOM_CONFIG=${OPENVPN_CUSTOM_CONFIG} # Path to your custom configuration file.
+      #
+      - SERVER_REGIONS=${SERVER_REGIONS}
+      - SERVER_CITIES=${SERVER_CITIES}
+      - SERVER_HOSTNAMES=${SERVER_HOSTNAMES}
+      - OPENVPN_ENDPOINT_PORT=${OPENVPN_ENDPOINT_PORT}
+      - WIREGUARD_ENDPOINT_PORT=${WIREGUARD_ENDPOINT_PORT}
+      - FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS}
+    volumes:
+      - ${LOCVOL1}downloaders/gluetun:/gluetun
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 6881:6881 # deluge torrents
+      - 6881:6881/udp # deluge torrents
+      - 9091:9091 # transmission UI
+      - 51413:51413 # transmission Download TCP
+      - 51413:51413/udp # transmission Download UDP
+      - 7878:7878 # radarr
+      - 8112:8112 # deluge UI
+      - 8989:8989 # sonarr
+      - 9117:9117 # jackett
+      - 3001:3000 # webtop2
