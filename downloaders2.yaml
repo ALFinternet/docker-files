@@ -53,9 +53,6 @@ services:
       - 8989:8989 # sonarr
       - 9117:9117 # jackett
       - 3001:3000 # webtop2
-  curl:
-    image: curlimages/curl
-    network_mode: "service:gluetun"  # <-- the magic
 #
   deluge:
     image: lscr.io/linuxserver/deluge:latest
