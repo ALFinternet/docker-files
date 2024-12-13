@@ -1,14 +1,16 @@
 # how to pass networking through containers/services
 # https://john.muchovej.com/thoughts/setting-up-liso-wireguard/
 ---
-version: "2.1"
 services:
 #
   privoxyvpn:
     image: ghcr.io/binhex/arch-privoxyvpn:latest
     container_name: privoxyvpn
+    # cap_add needed for OpenVPN?
     cap_add:
-      - NET_ADMIN
+        - NET_ADMIN
+        # SYS_MODULE might not be needed with a 5.6+ kernel?
+        #- SYS_MODULE
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -16,18 +18,18 @@ services:
       - VPN_ENABLED=yes
       - VPN_USER=${VPNUSER}
       - VPN_PASS=${VPNPASS}
-      - VPN_PROV=custom
-      - VPN_CLIENT=openvpn
+      - VPN_PROV=${VPNPROV} #custom
+      - VPN_CLIENT=${VPNCLIENT} #openvpn
       - VPN_OUTPUT_PORTS=
       - VPN_OPTIONS=
       - VPN_INPUT_PORTS=6881,7878,8112,8989,9117,51413,9091
       - SOCKS_USER=${SOCKSUSER}
       - SOCKS_PASS=${SOCKSPASS}
-      - NAME_SERVERS=10.255.255.1,1.1.1.1,1.0.0.1
-      - LAN_NETWORK=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
-      - ENABLE_SOCKS=yes
-      - ENABLE_PRIVOXY=yes
-      - DEBUG=false
+      - NAME_SERVERS=${VPNNAMESERVERS} #10.255.255.1,1.1.1.1,1.0.0.1
+      - LAN_NETWORK=${VPNLANNETWORK} #10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+      - ENABLE_SOCKS=${VPNENABLESOCKS} #yes
+      - ENABLE_PRIVOXY=${VPNENABLEPRIVOXY} #yes
+      - DEBUG=${VPNDEBUG} #false
     volumes:
       - ${LOCVOL1}downloaders/privoxyvpn:/config
     ports:
@@ -43,6 +45,14 @@ services:
       - 8989:8989 # sonarr
       - 9117:9117 # jackett
       - 3001:3000 # webtop2
+    privileged: true
+    sysctls:
+        # wg-quick fails to set this without --privileged, so set it here instead if needed
+        - net.ipv4.conf.all.src_valid_mark=1
+        # May as well disable ipv6. Should be blocked anyway.
+        - net.ipv6.conf.default.disable_ipv6=1
+        - net.ipv6.conf.all.disable_ipv6=1
+        - net.ipv6.conf.lo.disable_ipv6=1
     networks:
       - outsidelink
     restart: unless-stopped
