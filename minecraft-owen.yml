@@ -4,7 +4,7 @@
 ---
 services:
 #
-  minecraft-kids:
+  minecraft-owen:
     image: itzg/minecraft-server:${MCIMAGE}
     container_name: minecraft-owen
     environment:
