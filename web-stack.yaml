@@ -1,5 +1,4 @@
 --- 
-version: '3.7'
 services:
 #
   nginx:
@@ -28,8 +27,6 @@ services:
     env_file: stack.env # used by portainer
     volumes:
       - ${LOCVOL1}webstack/heimdall:/config
-    ports:
-      - 58080:80
     restart: unless-stopped
 #
   phpmyadmin:
