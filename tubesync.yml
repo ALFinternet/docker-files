@@ -13,7 +13,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${LOCVOL1}tubesync/config:/config
-      - ${LOCVOL1}tubesync/downloads:/downloads
+      - ${LOCVOL1}${TUBESYNCDLFOLDER}:/downloads
     ports:
       - 4848:4848 
     restart: unless-stopped
