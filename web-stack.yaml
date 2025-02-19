@@ -41,7 +41,7 @@ services:
     restart: unless-stopped
 #
   adminer:
-    image: lscr.io/linuxserver/nginx:latest
+    image: adminer:latest
     container_name: adminer
     environment:
       - PUID=${PUID}
