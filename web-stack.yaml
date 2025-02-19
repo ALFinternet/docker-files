@@ -40,6 +40,18 @@ services:
       - ${LOCVOL1}webstack/phpmyadmin:/config
     restart: unless-stopped
 #
+  adminer:
+    image: lscr.io/linuxserver/nginx:latest
+    container_name: adminer
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DOCKER_MODS=linuxserver/mods:swag-imagemagick|linuxserver/mods:universal-cron
+    volumes:
+      - ${LOCVOL1}webstack/adminer:/config
+    restart: unless-stopped
+#
 networks:
   default:
     name: ${CONNET}
