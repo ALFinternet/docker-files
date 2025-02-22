@@ -84,6 +84,7 @@ services:
     volumes:
       - ${LOCVOL1}minecraft-bedrock-a:/data
     ports:
+      - 19132:19132
       - 19132:19132/udp
     restart: unless-stopped
 #
