@@ -15,7 +15,7 @@ services:
       - TZ=${TZ}
       - TYPE=${MCTYPE}
       - EULA=TRUE
-      - VERSION=${MCVERSION} # What is our minecraft version
+      - VERSION=${MCVERSION}
       - OPS=${SVROPS}
       - MEMBERS=${SVRMEMBERS}
       - VISITORS=${SVRVISITORS}
@@ -94,26 +94,3 @@ networks:
   default:
     name: ${CONNET}
     external: true
-
-#
-#
-#PUID=1000
-#PGID=1000
-#TZ=America/Los_Angeles
-#LOCVOL1=/volume2/docker-ssd/
-#LOCVOL2=
-#NETCON=dbridge
-#MCTYPE=PAPER
-#MCVERSION=1.18.2
-#MCSVRNAME=Home Server
-#MCLEVEL=world
-#MCSEED=3612259
-#MCVIEWDIST=16
-#MCMOTD=MC Server
-#MCMODE=survival
-#MCPVP=false
-#MCMEM=4G
-#MCOPS=Fincher_
-#MCMODPACK=null
-#MCREMOVEOLDMODS=TRUE
-#MCSPIGET=null
