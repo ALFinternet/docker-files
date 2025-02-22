@@ -16,6 +16,9 @@ services:
       - TYPE=${MCTYPE}
       - EULA=TRUE
       - VERSION=${MCVERSION} # What is our minecraft version
+      - OPS=${SVROPS}
+      - MEMBERS=${SVRMEMBERS}
+      - VISITORS=${SVRVISITORS}
       - SERVER_NAME=${SERVER_NAME}
       - GAMEMODE=${GAMEMODE}
       - FORCE_GAMEMODE=${FORCE_GAMEMODE}
