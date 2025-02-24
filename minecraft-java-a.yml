@@ -50,8 +50,8 @@ services:
 #
 networks:
   default:
-    external:
-      name: ${NETCON}
+    name: ${CONNET}
+    external: true
 #
 #
 #
