@@ -1,0 +1,67 @@
+---
+services:
+#
+  minecraft-java-a:
+    image: itzg/minecraft-server:${MCIMAGE}
+    container_name: minecraft-java-a
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UID=${PUID}
+      - GID=${PGID}
+      - TZ=${TZ}
+      - TYPE=${MCTYPE}
+      - EULA=TRUE
+      - VERSION=${MCVERSION} # What is our minecraft version
+      - SERVER_NAME=${MCSVRNAME}
+      - LEVEL=${MCLEVEL} # world is the default
+      - SEED=${MCSEED}
+      - VIEW_DISTANCE=${MCVIEWDIST}
+      - SNOOPER_ENABLED=false
+      - MOTD=${MCMOTD}
+      - OPS=${MCOPS}
+      - EXISTING_OPS_FILE=${MCOPSEXIST}
+      - MODE=${MCMODE}
+      - PVP=${MCPVP}
+      - MEMORY=${MCMEM}
+      - USE_AIKAR_FLAGS=true
+      - MODPACK=${MCMODPACK}
+      - REMOVE_OLD_MODS=${MCREMOVEOLDMODS}
+      - SPIGET_RESOURCES=${MCSPIGET}
+      - RCON_CMDS_STARTUP=${MCCMDSSTART}
+      - RCON_CMDS_ON_DISCONNECT=${MCCMDSDISC}
+      - RCON_CMDS_FIRST_CONNECT=${MCCMDSSTARTFIRST}
+      - RCON_CMDS_LAST_DISCONNECT=${MCCMDSSTARTLAST}
+    volumes:
+      - ${LOCVOL1}minecraft-java-a:/data
+    ports:
+      - 25569:25565
+    restart: unless-stopped
+#
+#
+networks:
+  default:
+    external:
+      name: ${NETCON}
+#
+#
+#
+#PUID=1027
+#PGID=100
+#TZ=America/Los_Angeles
+#LOCVOL1=/volume2/docker-ssd/
+#LOCVOL2=/volume1/Externals/
+#NETCON=dbridge
+#MCTYPE=PAPER
+#MCVERSION=1.18.2
+#MCSVRNAME=Home Server
+#MCLEVEL=world
+#MCSEED=3612259
+#MCVIEWDIST=16
+#MCMOTD=MC Server
+#MCMODE=survival
+#MCMEM=4G
+#MCOPS=Fincher_
+#MCMODPACK=null
+#MCREMOVEOLDMODS=TRUE
+#MCSPIGET=null
