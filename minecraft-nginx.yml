@@ -1,0 +1,21 @@
+---
+services:
+#
+  minecraft-nginx:
+    image: lscr.io/linuxserver/nginx:latest
+    container_name: minecraft-nginx
+    env_file: stack.env # used by portainer
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${LOCVOL1}minecraft-nginx:/config
+    restart: unless-stopped
+#
+#
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true

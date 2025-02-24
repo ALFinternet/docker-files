@@ -38,16 +38,6 @@ services:
       - 25569:25565
     restart: unless-stopped
 #
-  mcweb:
-    image: lscr.io/linuxserver/nginx:latest
-    container_name: mcweb
-    env_file: stack.env # used by portainer
-    volumes:
-      - ${LOCVOL1}minecraft-java-a/nginx:/config
-    restart: unless-stopped
-#
-#
-#
 networks:
   default:
     name: ${CONNET}
