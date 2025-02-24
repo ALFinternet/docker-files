@@ -43,7 +43,7 @@ services:
     container_name: mcweb
     env_file: stack.env # used by portainer
     volumes:
-      - ${LOCVOL1}minecraft-java-a/mcweb:/config
+      - ${LOCVOL1}minecraft-java-a/nginx:/config
     restart: unless-stopped
 #
 #
