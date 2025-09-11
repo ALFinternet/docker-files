@@ -50,7 +50,7 @@ networks:
     name: ${CONNET}
     external: true
 #
-#
+# https://setupmc.com/java-server/
 #
 #PUID=1027
 #PGID=100
